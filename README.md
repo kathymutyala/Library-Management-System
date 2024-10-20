@@ -1,3 +1,36 @@
+# Library Management System Frontend
+
+This project is the frontend of a Library Management System built with React.js. It provides users with an interface to manage profiles, and handle user authentication, along with distinct sections for kids' and adult books.
+
+# Features
+
+User Authentication: Login and signup pages with form validation.
+Logout Page: users can logout from theor accounts.
+Book Sections: Separate pages for Kids and Adult books.
+Responsive Design: Styled with Bootstrap and CSS modules.
+API Integration: Uses Axios for communicating with the backend API.
+
+# Technologies Used
+
+Frontend: React.js
+Styling: CSS, Bootstrap 5
+Routing: React Router DOM
+HTTP Requests: Axios
+Testing: React Testing Library
+
+# Installation\*\*:
+
+Install All Dependencies
+
+```
+npm install @testing-library/jest-dom@^5.17.0 @testing-library/react@^13.4.0 @testing-library/user-event@^13.5.0 axios@^1.7.7 bootstrap@^5.3.3 react@^18.3.1 react-dom@^18.3.1 react-router-dom@^6.27.0 react-scripts@5.0.1 web-vitals@^2.1.4
+
+```
+
+# Start the APP:
+
+npm start
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

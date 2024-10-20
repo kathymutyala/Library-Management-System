@@ -1,25 +1,82 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import KidsBooksPage from "./pages/KidsBooksPage";
+import AdultBooksPage from "./pages/AdultBooksPage";
+import AddBookPage from "./pages/AddBookPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import ContactUs from "./pages/ContactUs";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Logout from "./components/Logout";
 
-function App() {
+// Utility to check if the user is authenticated
+const isAuthenticated = () => !!localStorage.getItem("token");
+
+// PrivateRoute component to protect routes
+const PrivateRoute = ({ children, redirectTo }) => {
+  return isAuthenticated() ? children : <Navigate to={redirectTo} />;
+};
+
+// Layout component to control when to show the Header/Footer
+const Layout = ({ children }) => {
+  const location = useLocation();
+
+  // Hide Header and Footer on specific routes (login and signup)
+  const hideLayout =
+    location.pathname === "/signup" || location.pathname === "/login";
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {!hideLayout && <Header />}
+      <main>{children}</main>
+      {!hideLayout && <Footer />}
+    </>
   );
-}
+};
+
+const App = () => {
+  return (
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/add" element={<AddBookPage />} />
+          <Route
+            path="/kids-books"
+            element={
+              <PrivateRoute redirectTo="/login">
+                <KidsBooksPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/adult-books"
+            element={
+              <PrivateRoute redirectTo="/login">
+                <AdultBooksPage />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </Layout>
+    </Router>
+  );
+};
 
 export default App;
